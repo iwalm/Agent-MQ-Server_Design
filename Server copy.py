@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 import boto3
 import time
-import uuid
-import json
+import uuid 
 
 app = Flask(__name__)
 
@@ -11,23 +10,17 @@ timestamp = int(time.time() * 1000)
 
 # Initialize AWS SQS client
 sqs = boto3.client('sqs', region_name='eu-north-1')
-sendqueue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/Server'
-receivequeue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/Agent'
+sendqueue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/send'
+receivequeue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/receive'
 
 @app.route('/send-command', methods=['POST'])
 def send_command():
-    agent_id = 'agent-1'  # Unique ID for the agent
     data = request.get_json()
     command = data.get('command')
-    message_data = {
-        'agent_id': agent_id,
-        'message': command
-    }
-    message_body = json.dumps(message_data)
     deduplication_id = f"{timestamp}-{unique_id}"
     
     # Send the command to SQS queue
-    sqs.send_message(QueueUrl=sendqueue_url, MessageBody=message_body)
+    sqs.send_message(QueueUrl=sendqueue_url, MessageBody=command)
     
     return 'Command sent to agents.'
 
