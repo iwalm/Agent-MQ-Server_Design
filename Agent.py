@@ -3,16 +3,48 @@ import time
 import boto3
 import uuid
 import json
+import signal
+import sys
+import os
+import socket
+
 
 unique_id = uuid.uuid4()
 timestamp = int(time.time() * 1000)
-agent_id = 'agent-1'
+#agent_id = 'agent-1'
 
 # Initialize AWS SQS client
 sqs = boto3.client('sqs', region_name='eu-north-1')
 sendqueue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/Agent'
 receivequeue_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/Server'
+registration_url = 'https://sqs.eu-north-1.amazonaws.com/701545181846/register'
 
+LOCK_FILE = 'agent.lock'
+
+def generate_agent_id():
+    if not os.path.exists(LOCK_FILE):
+        agent_id = str(uuid.uuid4())
+        hostname = socket.gethostname()
+        agent_info = {'agent_id': agent_id, 'hostname': hostname}
+        with open(LOCK_FILE, 'w') as file:
+            json.dump(agent_info, file)
+        agent_info = agent_info
+        message_body = json.dumps(agent_info)
+        sqs.send_message(QueueUrl=registration_url, MessageBody=message_body)
+        print(f"Sent agent information to SQS: {message_body}")
+    else:
+        print("Registration not needed")
+
+# Get or generate agent ID only if the lock file does not exist
+agent_registration = generate_agent_id()
+
+def get_agent_id():
+    if os.path.exists(LOCK_FILE):
+        with open(LOCK_FILE, 'r') as file:
+            agent_info = json.load(file)
+            return agent_info['agent_id']
+        
+agent_id = get_agent_id()
 
 def run_command(command):
     try:
@@ -22,6 +54,13 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         # If the command execution fails, return the error message
         return f"Error: {e.output}"
+    
+def signal_handler(sig, frame):
+    print("\nReceived Ctrl + C. Exiting...")
+    sys.exit(0)
+
+# Register the signal handler for Ctrl + C
+signal.signal(signal.SIGINT, signal_handler)
 
 while True:
     # Receive messages from SQS queue
