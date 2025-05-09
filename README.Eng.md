@@ -1,20 +1,31 @@
-<Server copy.py程序分析 田佳祺编写 >
-程序简介：
-    这是一个基于Flask框架搭建的服务器程序。它的主要作用是向远程设备发送控制指令，并通过消息队列接收设备返回的数据。开发者可以用它管理物联网设备或分布式计算节点。
+<!-- <Technical Analysis of Server.pyde - Authored by Tian Jiaqi> -->
 
-核心功能模块
-    指令发送功能:
-        访问路径：/send-command
-        接收POST请求
-        请求需要包含JSON格式的指令内容
-        程序会把指令推送到AWS的消息队列
+This is a C2 (Command and Control) server system based on the Flask framework.:
 
-    响应接收功能:
-        访问路径：/receive-response
-        处理GET请求
-        从另一个消息队列读取设备返回的数据
-        返回JSON格式的响应内容
-适用场景:
-    物联网设备管理
-    自动化测试
-    分布式任务调度
+Main Functionalities:
+
+    Provides 3 API endpoints:
+        Send commands
+        Receive responses
+        Register agents
+    Uses MySQL database to store agent registration data
+    Implements asynchronous messaging via SQS
+Applicable Scenarios:
+    IoT device management
+    Red team operations (penetration testing)
+    Distributed task scheduling (scenarios requiring centralized control)
+    
+Code Characteristics Summary:
+    Hybrid communication model:
+        Asynchronous queue (SQS) + Synchronous HTTP (Flask)
+    Stateless API with persistent database storage
+    No authentication mechanism (security consideration)
+    Hardcoded agent_id (static agent identification)
+
+Key Technical Points:
+    Asynchronous Communication
+        Uses SQS to decouple server and agents, avoiding direct TCP connections
+    Data Persistence
+        MySQL ensures agent registration data is retained
+    Lightweight Protocol
+        JSON format balances readability and transmission efficiency 
