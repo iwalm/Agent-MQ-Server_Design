@@ -1,4 +1,4 @@
-<!-- <Server.pyde 的代码分析及其功能 田佳祺编写> -->
+<!-- <针对Server.pyde 的代码分析及其功能 田佳祺编写> -->
 
 这是一个基于Flask框架的C2（Command and Control）服务器系统:
 
