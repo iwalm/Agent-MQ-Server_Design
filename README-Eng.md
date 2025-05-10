@@ -46,3 +46,31 @@ pip install zipp==3.17.0  # Used for handling Python zip file operations, provid
 #Related to Web Frameworks
 pip install flask==3.0.0  # A lightweight Python web framework for quickly building web applications
 ```
+2. Specific operation steps
+Step 1: Create a virtual environment. You can execute the following commands in the terminal:
+# For Windows systems
+python -m venv myenv  (myenv is the name of the virtual environment)
+# For Linux or macOS systems
+python3 -m venv myenv
+
+Step 2: Activate the virtual environment
+After creating the virtual environment, you need to activate it. The activation commands are as follows:
+# For Windows systems
+myenv\Scripts\activate
+# For Linux or macOS systems
+source myenv/bin/activate
+
+Step 3: Install dependencies
+When the virtual environment is activated, you can install the dependencies required by the project. You can install them one by one, or write all the dependencies into a requirements.txt file and then install them in batches.
+# Install dependencies one by one
+According to the provided list of dependencies, execute the pip install commands sequentially in the terminal. For example:
+pip install awscli==1.29.71
+pip install boto==2.49.0
+# Install dependencies in batches
+First, copy all the dependency information into a file named requirements.txt. Then, execute the following command in the terminal for batch installation:
+pip install -r requirements.txt
+
+Step 4: Verify the installation
+After the dependencies are installed, you can view the installed packages by using the following command:
+pip list 
+>>>>>>> d74d3d48a508fd4b859efc8e2a630013e5cf6fe4

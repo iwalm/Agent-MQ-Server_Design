@@ -72,3 +72,4 @@ pip install -r requirements.txt
 第四步：验证安装
 依赖安装完成后，可以通过以下命令查看已安装的包：
 pip list
+>>>>>>> d74d3d48a508fd4b859efc8e2a630013e5cf6fe4v
