@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!-- <Technical Analysis of Server.pyde - Authored by Tian Jiaqi> -->
 
 This is a C2 (Command and Control) server system based on the Flask framework.:
@@ -61,7 +60,6 @@ Operational Contexts:
     IoT Device Fleet Management
     Automated Test Orchestration 
     Distributed Task Coordination
-=======
 ### II. Purpose and Function Description of the Agent Code
 
 #### 1. **Purpose Description**
@@ -96,4 +94,3 @@ Operational Contexts:
 6. **Continuous Operation**:
 
    - Runs in an infinite loop, checking the receive queue every 5 seconds to continuously process new messages.
->>>>>>> 6c9754f4e500d0216e0d74acc100b94cac3ff4ba
