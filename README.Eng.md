@@ -1,31 +1,44 @@
-<!-- <Technical Analysis of Server.pyde - Authored by Tian Jiaqi> -->
+<6agent.py程序分析 黄钰慧编写>
+I. Analysis of the Purpose and Function of 6agent.py:
+    The goal of this project is to build a message feedback system using AWS SQS queue service.
+    The system mainly implements the following functions:
 
-This is a C2 (Command and Control) server system based on the Flask framework.:
+    1. Message Receiving Function
+        - The program continuously checks a specific SQS queue through a loop.
+        - This queue is located in the eu-north-1 region and is named "six".
+        - Each time it checks, it can retrieve up to 1 message at most.
 
-Main Functionalities:
+    2. Message Display Function
+        - When a message is received, the program immediately displays the message content on the console.
+        - The display format is "Received message: message content".
 
-    Provides 3 API endpoints:
-        Send commands
-        Receive responses
-        Register agents
-    Uses MySQL database to store agent registration data
-    Implements asynchronous messaging via SQS
-Applicable Scenarios:
-    IoT device management
-    Red team operations (penetration testing)
-    Distributed task scheduling (scenarios requiring centralized control)
-    
-Code Characteristics Summary:
-    Hybrid communication model:
-        Asynchronous queue (SQS) + Synchronous HTTP (Flask)
-    Stateless API with persistent database storage
-    No authentication mechanism (security consideration)
-    Hardcoded agent_id (static agent identification)
+    3. Message Forwarding Function
+        - The program copies the body of the received message completely.
+        - Then it sends the copied content back to the same queue.
+        - This operation produces an effect of message duplication.
 
-Key Technical Points:
-    Asynchronous Communication
-        Uses SQS to decouple server and agents, avoiding direct TCP connections
-    Data Persistence
-        MySQL ensures agent registration data is retained
-    Lightweight Protocol
-        JSON format balances readability and transmission efficiency 
+    4. Message Deletion Function
+        - After completing the message forwarding, the program immediately sends a deletion command to the queue.
+        - The deletion operation uses the ReceiptHandle of the message for identification.
+        - This can prevent the same message from being processed repeatedly.
+
+<6server.py程序分析 黄钰慧编写>
+II. Analysis of the Purpose and Function of 6server.py:
+    The 6server.py program is used to send test messages to the AWS SQS queue regularly.
+    The program mainly implements three functions:
+
+    1. Message Sending Function
+        - The program sends messages to the specified queue through a loop every second.
+        - The target queue is located in the eu-north-1 region and is named "six".
+        - The message sending interval is controlled by time.sleep(1) to avoid over-consuming system resources.
+
+    2. Message Format Setting
+        - Currently, all message contents are fixed as "hello".
+        - Users can modify the message content according to actual needs:
+            * Changing it to dynamically generated timestamps
+            * Or using simulated sensor data
+
+    3. Sending Status Confirmation
+        - Each time a message is successfully sent, the program displays "Sent message: hello" on the console.
+        - This kind of log recording method can help users confirm whether the message has entered the queue normally.
+
