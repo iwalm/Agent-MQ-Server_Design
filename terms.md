@@ -30,12 +30,12 @@
 | Process Daemon                | Background Process Manager                    | 后台进程守护程序
 | Lock File                     | .lock File Mechanism                          | 防止多实例运行的锁文件机制
 | Message Polling               | Queue Message Retrieval Method                | 消息队列轮询机制
-| Reverse Proxy       		    | Nginx反向代理                                 | Nginx反向代理服务器
+| Reverse Proxy       		    | Nginx反向代理                                  | Nginx反向代理服务器
 
 5.网络与安全
 | 英语术语                 	    | 英文全称/解释        			                | 中文解释                        		 
 |--------------------------	    |---------------------------------------	    |--------------------------------	 
-| JWT Authentication  	        | JSON Web Token                       	        | JSON网络令牌认证                		                  		 
+| JWT Authentication  	        | JSON Web Token                       	        | JSON网络令牌证                		                  		 
 | bcrypt              		    | Password Hashing Function            	        | 密码哈希加密算法 
 | IAM Credentials     	        | AWS访问凭证                                    | AWS身份验证密钥               		 
 
@@ -64,9 +64,19 @@
 | IoT Devices         		    | Internet of Things 			                | 物联网设备                      		 
 | Reverse Proxy       		    | 反向代理服务器     			                 | 网络请求转发服务                		 
 
-10.​​扩展架构类​
+10.​​扩展架构​
 | 英语术语                      | 英文全称/解释                                 | 中文解释
 |--------------------------     |---------------------------------------        |-------------------------------
 | Web Console                   | Administrative Dashboard                      | 网页管理控制台
 | Reverse Proxy                 | Nginx Traffic Forwarding                      | 反向代理流量分发
 | High Availability             | HA Cluster Design                             | 高可用集群架构
+
+​11.​开发框架/工具类​
+| 英语术语                      | 英文全称/解释                                 | 中文解释
+|--------------------------     |---------------------------------------        |-------------------------------
+| Gunicorn                      | Green Unicorn WSGI Server                     | Python WSGI HTTP生产服务器
+| PM2                           | Process Manager 2                             | 进程守护工具（Node.js生态）
+| subprocess                    | Python Subprocess Module                      | Python子进程管理模块
+| Boto3                         | AWS SDK for Python                            | AWS官方Python开发工具包
+| Werkzeug                      | WSGI Utility Library                          | Flask底层WSGI工具库
+| Click                         | Command Line Interface Creator                | Python命令行工具开发框架
