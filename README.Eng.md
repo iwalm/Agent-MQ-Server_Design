@@ -5,9 +5,9 @@ Here is the detailed English translation of the running and usage instructions f
 
  1. Hardware/Software Requirements
 OS: Linux/macOS/Windows (for both agent and server)
-Python**: 3.7+
-AWS Account** (for SQS service)
-Network**: Devices and control server must be able to access AWS SQS
+Python: 3.7+
+AWS Account (for SQS service)
+Network: Devices and control server must be able to access AWS SQS
 
  2. Dependency Installation
 bash
@@ -17,7 +17,7 @@ cd <project_dir>
 
  Install dependencies
 pip install -r requirements.txt
-```
+
 
  3. AWS Configuration
 1. Create SQS queues (3 required):
@@ -61,7 +61,7 @@ III. Usage Guide
  List all devices
 bash
 curl http://localhost:5000/api/v1/devices
-```
+
 Response example:json
 {
   "status": "success",
@@ -89,7 +89,7 @@ curl -X POST http://localhost:5000/api/v1/commands \
     "timeout": 30
   }
 Response example:
-```json
+json
 {
   "status": "success",
   "command_id": "cmd_abcd1234",
@@ -97,7 +97,7 @@ Response example:
 }
 
  Broadcast command (all devices)
-```bash
+bash
 curl -X POST http://localhost:5000/api/v1/commands \
   -d '{"command": "date"}'
 
@@ -157,7 +157,7 @@ curl -X POST http://localhost:5000/api/v1/commands \
  V. Troubleshooting
 
  Common Issue 1: Device Not Registered
- Symptom**: Empty device list
+ Symptom: Empty device list
  Checks:
   1. Verify agent logs show "Device registered"
   2. Check AWS SQS console for messages in registration queue
@@ -168,7 +168,7 @@ Debug steps:
    1. Check command queue
   aws sqs get-queue-attributes 
     queue-url <COMMAND_QUEUE_URL> 
-    --attribute-names ApproximateNumberOfMessages
+      attribute-names ApproximateNumberOfMessages
 
   2. Verify agent process
   ps aux | grep agent.py
@@ -184,7 +184,7 @@ tail -f server.log
 grep -i error agent.log
  VI. Production Recommendations
 
-1. Security Enhancements**:
+1. Security Enhancements:
    Enable HTTPS (Nginx reverse proxy + SSL)
     Add JWT authentication in `config.py`
     Restrict SQS queue IAM policies
