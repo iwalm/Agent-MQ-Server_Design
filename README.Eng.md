@@ -1,5 +1,4 @@
-Here is the detailed English translation of the running and usage instructions for the distributed device management system:
-《by:oyy》
+Here is the detailed English translation of the running and usage instructions for the distributed device management system:《author:ouyuanyuan》
  I. Environment Preparation
 
  1. Hardware/Software Requirements
