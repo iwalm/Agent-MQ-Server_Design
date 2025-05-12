@@ -1,37 +1,5 @@
 
-<!-- <Detailed Steps to Run the Project - Author: Lin Jinqiu> -->  
-
-1. Environment Preparation  
-1.1 Install Python Dependencies  
- Execute in the VSCode terminal:    
-  pipinstall boto3 python-dotenv  
-  
-Recommended: Use a mirror source for faster installation:  
-
-  pip install boto3 python-dotenv -i https://pypi.tuna.tsinghua.edu.cn/simple  
-  
-
-1.2 Configure AWS Credentials  
-1. Access the AWS Management Console via a browser.  
-2. Log in using your root account or an IAM user.  
-3. Create an IAM user (if not already created):  
-   Assign the AmazonSQSFullAccess policy.  
-   Generate Access Key ID and Secret Access Key.  
-4. Integrate credentials into the code:  
-
-Method 1 (Recommended): Environment Variables  
-Create a `.env` file in the project root with:  
-   
-  AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY  
-  AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY  
-  AWS_REGION=eu-north-1   
-
-Method 2: AWS CLI Configuration  
-Install the AWS CLI and run: 
-  bash
-  aws configure  
-   Input your AccessKey, SecretKey, and Region (eu-north-1).  
-
+<!-- <Add detailed steps to run the project - Author: Lin Jinqiu> -->  
 
 2. Project Structure  
 Ensure the project is organized as follows:  
@@ -41,7 +9,7 @@ Agent-MQ-Server_Design/
 ├── server.py           # Server-side code  
 ├── requirements.txt    # Dependency list (optional)  
 └── .env                # Environment variables (optional)  
-  
+
 
 3. Update Queue URLs in Code  
 Verify the following queue URLs in agent.py and server.py match your AWS account:  
@@ -52,7 +20,6 @@ sendqueue_url = 'https://sqs.eu-north-1.amazonaws.com/AWS_ACCOUNT_ID/Agent'
 registration_url = 'https://sqs.eu-north-1.amazonaws.com/AWS_ACCOUNT_ID/register'  
  server.py  
 queue_url = 'https://sqs.eu-north-1.amazonaws.com/AWS_ACCOUNT_ID/Agent'  
-  
 
 4. Run the Code  
 4.1 Start the Agent-Side  

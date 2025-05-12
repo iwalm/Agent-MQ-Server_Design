@@ -1,33 +1,5 @@
-<运行项目的详细步骤 - 作者:林锦秋>
-1. 环境准备
-1.1 安装Python
- 在VSCode终端中执行：
-  pip install boto3 python-dotenv
-
-建议直接添加源使用 pip install boto3 python-dotenv -i https://pypi.tuna.tsinghua.edu.cn/simple  
-1.2 配置AWS凭证
-浏览器访问AWS管理控制台
-使用根账户或 IAM 用户登录。
-创建 IAM 用户（如果尚未创建）
-分配权限
-生成 Access Key ID和 Secret Access Key 
-将密钥配置到代码中
-
-方法1（推荐）：通过环境变量配置  
-  在项目根目录新建 .env 文件，内容如下：
-  AWS_ACCESS_KEY_ID=你的AccessKey
-  AWS_SECRET_ACCESS_KEY=你的SecretKey
-  AWS_REGION=eu-north-1
- 
-方法2：通过AWS CLI配置  
-  安装AWS CLI后运行：
-  bash
-  aws configure. 项目结构
-确保项目
-  输入AccessKey、SecretKey、Region（eu-north-1）。
-
-2文件如下组织：
-
+<运行项目的部分补充步骤 - 作者:林锦秋>
+2。文件如下组织：
 Agent-MQ-Server_Design/
 ├── agent.py            # Agent端代码
 ├── server.py           # Server端代码
@@ -60,31 +32,25 @@ python server.py
  预期输：
   Sent message: hello
 
-
-
 <!-- <使用项目的详细步骤 - 作者:林锦秋> -->
-
 1. 启动服务组件
 步骤1：启动Agent端  
- 作用：监听任务队列，接收并执行命令。  
- 操作：在终端运行Agent端代码。  
-  python agent.py
+ 功能：监听任务队列，接收并执行命令。  
+ 操作：在终端运行  python agent.py
    预期输出：  
   Sent agent information to SQS: {"agent_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", "hostname": "your-pc"}
   Polling messages from queue...
 
 步骤2：启动Server端  
-作用：向任务队列发送命令，并监听结果队列（可选）。  
-操作：在另一终端运行Server端代码。  
-  python server.py
+作用：向任务队列发送命令，并监听结果队列。  
+操作：在另一终端运行Server端代码。  python server.py
   
  预期输出：  
   Sent message: "hello"
 
 2. 发送自定义命令
 方法1：通过Server端代码动态发送命令 
- 修改 server.py 中的 message_body，例如：  
-  python
+ 修改 server.py 中的 message_body，例如： 
   server.py
   message_body = ping 8.8.8.8  # 发送网络检测命令
 重新运行 server.py，Agent端将执行该命令并返回结果。
@@ -96,7 +62,7 @@ python server.py
 
 3. 查看执行结果
 方式1：通过Server端监听结果队列  
- 若Server端代码包含结果队列监听逻辑（需自行扩展），运行后会显示返回结果：  
+运行后会显示返回结果：  
   Received response from Agent-xxxx: "64 bytes from 8.8.8.8: icmp_seq=0 ttl=117 time=25.3 ms"
   
 方式2：在AWS控制台查看消息 
@@ -127,10 +93,8 @@ python server.py
 
 关键命令示例  
  发送复杂命令：  
- python
    server.py
   message_body = "df -h"  # 查看磁盘空间
-  
  结果示例：  
   Received response: "Filesystem      Size  Used Avail Use% Mounted on ..."
   
@@ -139,15 +103,16 @@ python server.py
   避免发送高危命令（如 rm -rf /），或在代码中添加白名单过滤。  
 2. 定期轮换AWS凭证：  
   在IAM控制台中定期生成新的Access Key，并更新 .env 文件。  
-3. 启用SQS死信队列（DLQ）：  
-   处理无法被消费的消息，避免队列阻塞。
+3. 队列管理：  
+   配置DLQ处理异常消息。
 
 总结
 1. 启动服务：分别运行Agent和Server端。  
 2. 发送命令：通过代码或AWS控制台下发指令。  
 3. 查看结果：从Server端日志或AWS队列中获取执行结果。  
 4. 扩展与监控：支持多Agent负载均衡，并通过AWS控制台监控消息流。  
-通过上述步骤，可以灵活使用该分布式任务系统，实现远程命令执行、结果收集和任务调度。
+此系统支持远程命令执行、结果收集和任务调度。
+
 
 <6agent.py程序分析 黄钰慧编写>
 一、分析为6agent.py的目的和功能：
